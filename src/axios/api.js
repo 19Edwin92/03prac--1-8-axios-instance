@@ -3,7 +3,7 @@ import axios from "axios";
 const instance = axios.create({
   baseURL:`${process.env.REACT_APP_SERVER_URL}`,
   // 03-03 강제로 오류 발생시켜보기  /////////////////////////////////
-  timeout:1
+  // timeout:1
 })
 
 // 03-01 interceptors 요청 시에 개입하기 /////////////////////////////////
