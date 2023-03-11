@@ -10,6 +10,7 @@ function App() {
   const fetchTodos = async () => {
     const {data} = await api.get(`/todos`)
     setTodos(data)
+    console.log(data)
   }
 
   //01-01 AXIOS.GET
@@ -23,9 +24,9 @@ function App() {
   })
 
   const onSubmitHandler = async () => {
-    api.post(`/todos`, inputValue);
-    setTodos([...todos, inputValue]);
-    // await fetchTodos();
+    await api.post(`/todos`, inputValue);
+    // setTodos([...todos, inputValue]);
+    await fetchTodos();
   }
 
   //03-01 AXIOS.DELETE
