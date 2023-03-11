@@ -25,7 +25,7 @@ function App() {
   const onSubmitHandler = async () => {
     api.post(`/todos`, inputValue)
     setTodos([...todos, inputValue]);
-    
+    // fetchTodos();
   }
 
   //03-01 AXIOS.DELETE
