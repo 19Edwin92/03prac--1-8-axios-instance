@@ -1,6 +1,6 @@
 // import axios from 'axios'  // 가공한 instance를 활용해보자. 
 import React, { useEffect, useState } from 'react'
-import api from './axios/api'
+import api from '../axios/api'
 
 function App() {
 
