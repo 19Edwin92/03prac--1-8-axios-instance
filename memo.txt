@@ -1,0 +1,61 @@
+새로고침 했을 때, 날아가는 서비스는 진정한 서비스라고 할 수 없죠. 새로고침에도 기능이 구현되는 방법에 대해서 살펴봅시다. ]
+
+#01
+  패키지 설치하기
+  - json-server
+  - axios
+
+#02
+  db.json 설정하기 
+  `${process.env.REACT_APP_SERVER_URL}/todos`
+
+#03
+  - App.jsx 에서 db.json 열기 
+  - yarn json-server --watch db.json --port 4001
+  - AXIOS의 통신방법 : GET, POST, DELETE, PATCH
+
+      // APP.js
+      //01-02 AXIOS.GET
+        const fetchTodos = async () => {
+          const response = axios.get('https://localhost4001/todos')
+          console.log(response)
+        }
+
+        //01-01 AXIOS.GET
+        useEffect(() => {
+          fetchTodos();
+        },[])
+
+  컴포넌트가 마운트 되었을 때, 실행은 되지만, 아마도 "특정 호스트 이름을 가진 서버를 찾을 수 없습니다."라는 오류를 콘솔에서 발견할 것이다. 
+  이유는 호출한 AXIOS로부터 정보를 받아오기 전에, 콘솔이 실행되었기 때문인데, 이를 기다리는 await 를 사용하면, 기다렸다가 콘솔에 기록하는 것을 볼 수 있을 것이다. 
+  값을 가져왔다면, map 매서드를 통해서 화면에 뿌릴 수 있습니다. 
+  그러나 todos가 비동기이기 때문에, 옵셔널체이닝을 통해서, 에러가 아니라 undefined 처리를 하면 문제없이 실행이 될 것이고, 
+  정보를 받아오면 화면에 리렌더링 될 것입니다. 
+
+  그러나 이전에 남겨두었던 문제가 있었습니다. 
+  title는 입력을 했지만, id가 입력되지 않아서 발생하는 key 오류를 콘솔에서 볼 수 있습니다.
+  Warning: Each child in a list should have a unique "key" prop. 
+
+    const onSubmitHandler = async (e) => {
+      e.preventDefault();
+      axios.post('http://localhost:4001/todos', inputValue)
+      setTodos([...todos, inputValue]);
+    }
+
+    대신에 get을 새롭게 해줍시다. 
+    const onSubmitHandler = async (e) => {
+      e.preventDefault();
+      axios.post('http://localhost:4001/todos', inputValue)
+      fetchTodos();
+    }
+
+
+#04
+  AXISO.POST  
+  NoSQL 방식에서는 id를 자동으로 추가해줍니다. 
+
+#05
+  AXISO.DELETE
+  삭제버튼을 만들어 주는 부분에 콜백함수 형태로 기록하지 않으면, 해당 내용이 함께 삭제가 될 것이기에 주의해야 한다. 
+  &nbsp; <button onClick={()=>onDeleteHandler(el.id)}>삭제하기</button>
+  실시간 반영을 위해서 todos를 변경해주자. 
